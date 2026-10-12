@@ -10,7 +10,7 @@ import java.util.Random;
 public class TorpedoStore {
 
   // rate of failing to fire torpedos [0.0, 1.0]
-  private double FAILURE_RATE = 0.0; //NOSONAR
+  private double failureRate = 0.0; //NOSONAR
 
   private int torpedoCount = 0;
   private final Random generator = new Random();
@@ -22,9 +22,9 @@ public class TorpedoStore {
     String failureEnv = System.getenv("IVT_RATE");
     if (failureEnv != null){
       try {
-        FAILURE_RATE = Double.parseDouble(failureEnv);
+        failureRate = Double.parseDouble(failureEnv);
       } catch (NumberFormatException nfe) {
-        FAILURE_RATE = 0.0;
+        failureRate = 0.0;
       }
     }
   }
@@ -40,7 +40,7 @@ public class TorpedoStore {
 
     double r = generator.nextDouble();
 
-    if (r >= FAILURE_RATE) {
+    if (r >= failureRate) {
       // successful firing
       this.torpedoCount -= numberOfTorpedos;
       success = true;
